@@ -81,9 +81,8 @@ function endGame() {
     clearInterval(timer);
 
     var quizContent = `
-    <h2>Game over!</h2>
-    <h3>You got a ` + score +  ` /100!</h3>
-    <h3>That means you got ` + score / 20 +  ` questions correct!</h3>
+    <h1>Game over!</h1>
+    <h2>You got a ` + score +  ` /100!</h2>
     <input type="text" id="name" placeholder="First name"> 
     <button onclick="setScore()">Set score!</button>`;
 
