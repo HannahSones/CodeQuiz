@@ -1,64 +1,63 @@
 // Quiz questions as objects
 
 var questions = [{
-    title: "Question 1: What does CSS stand for?",
+    question: "Question 1: What does CSS stand for?",
     choices: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Cascading Style Solution"],
     answer: "Cascading Style Sheets"
 },
 
 {
-    title: "Question 2: How many elements can you apply an 'ID' attribute to?",
+    question: "Question 2: How many elements can you apply an 'ID' attribute to?",
     choices: ["3", "As many as you want", "1", "0"],
     answer: "1"
 },
 
 {
-    title: "Question 3: What is the correct CSS syntax?",
+    question: "Question 3: What is the correct CSS syntax?",
     choices: ["body:color=black;", "{body:color=black;}", "body {color:black;}", "{body;color:black;}"],
     answer: "body {color:black;}"
 },
 
 {
-    title: "Question 4: How do you select an element with id 'demo'",
+    question: "Question 4: How do you select an element with id 'demo'",
     choices: ["#demo", "demo", ".demo", "*demo"],
     answer: "#demo"
 },
 
 {
-    title: "Question 5: Which of the following function of Array object adds and/or removes elements from an array?",
+    question: "Question 5: Which of the following function of Array object adds and/or removes elements from an array?",
     choices: ["toSource()", "sort()", "splice()", "unshift()"],
     answer: "splice()"
 },
 
 {
-    title: "Question 6: An if statement must have an else attached?",
+    question: "Question 6: An if statement must have an else attached?",
     choices: ["True", "False"],
     answer: "False"
 },
 
 {
-    title: "Question 7: Which of the following function of String object combines the text of two strings and returns a new string?",
+    question: "Question 7: Which of the following function of String object combines the text of two strings and returns a new string?",
     choices: ["add( )", "concat( )", " merge( )", "append( )"],
     answer: "concat( )"
 },
 
 {
-    title: "Question 8: Two or more conditions can be added using && and ||",
+    question: "Question 8: Two or more conditions can be added using && and ||",
     choices: ["True", "False"],
     answer: "True"
 }
 ];
 
-// Copied code
 
-//setting the numerical variables for the functions.. scores and timers.. 
+// Setting the numerical variables for the timer and score
 var score = 0;
 var currentQuestion = -1;
 var timeLeft = 0;
 var timer;
 
-//starts the countdown timer once user clicks the 'start' button
-function start() {
+// Starts the countdown timer once user clicks 'play'
+function play() {
 
     timeLeft = 90;
     document.getElementById("timeLeft").innerHTML = timeLeft;
@@ -66,7 +65,8 @@ function start() {
     timer = setInterval(function() {
         timeLeft--;
         document.getElementById("timeLeft").innerHTML = timeLeft;
-        //proceed to end the game function when timer is below 0 at any time
+        
+        // When timer is below 0, end the game
         if (timeLeft <= 0) {
             clearInterval(timer);
             endGame(); 
@@ -76,21 +76,21 @@ function start() {
     next();
 }
 
-//stop the timer to end the game 
+// Stops the timer to end the game 
 function endGame() {
     clearInterval(timer);
 
     var quizContent = `
     <h1>Game over!</h1>
-    <h2>You got a ` + score +  ` /100!</h2>
-    <input type="text" id="name" placeholder="First name"> 
-    <button onclick="setScore()">Set score!</button>`;
+    <h2>You got ` + score +  ` /80!</h2>
+    <input type="text" id="name" placeholder="Initials"> 
+    <button onclick="saveScore()">Save score!</button>`;
 
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
-//store the scores on local storage
-function setScore() {
+// Stores the scores on local storage
+function saveScore() {
     localStorage.setItem("highscore", score);
     localStorage.setItem("highscoreName",  document.getElementById('name').value);
     getScore();
@@ -102,13 +102,15 @@ function getScore() {
     <h1>` + localStorage.getItem("highscore") + `</h1><br> 
     
     <button onclick="clearScore()">Clear score!</button><button onclick="resetGame()">Play Again!</button>
-    
     `;
+
+    console.log("Initials:", document.getElementById('name').value);
+    console.log("Score is:", score);
 
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
-//clears the score name and value in the local storage if the user selects 'clear score'
+// Clears the saved scores in the local storage
 function clearScore() {
     localStorage.setItem("highscore", "");
     localStorage.setItem("highscoreName",  "");
@@ -116,7 +118,7 @@ function clearScore() {
     resetGame();
 }
 
-//reset the game 
+// Resets the game 
 function resetGame() {
     clearInterval(timer);
     score = 0;
@@ -127,30 +129,40 @@ function resetGame() {
     document.getElementById("timeLeft").innerHTML = timeLeft;
 
     var quizContent = `
-    <h1>
-        JavaScript Quiz!
-    </h1>
-    <h3>
-        Click to play!   
-    </h3>
-    <button onclick="start()">Start!</button>`;
+    <h1>Coding Quiz!</h1>
+    <h3>It's a race against the clock to answer all 8 questions correctly in the fastest time.</h3>
+    <button onclick="play()">Play!</button>`;
 
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
-//deduct 15seconds from the timer if user chooses an incorrect answer
+// If a player answers incorrectly, deduct 10 seconds from the timer and add alert
 function incorrect() {
-    timeLeft -= 15; 
+    timeLeft -= 10;
+    
+        var incorrectNotify = document.createElement("div");
+        incorrectNotify.setAttribute("style", "font-size: 12px; color: red; font-weight: bold;");
+        incorrectNotify.textContent = "You got the answer wrong!";
+        quiz.appendChild(incorrectNotify);
+        console.log("incorrect")
+
     next();
 }
 
-//increases the score by 20points if the user chooses the correct answer
+// If a player answers correctly, increase the score by 10 points and add alert
 function correct() {
-    score += 20;
+    score += 10;
+
+    var correctNotify = document.createElement("div");
+            correctNotify.setAttribute("style", "font-size: 12px; color: green; font-weight: bold;");
+            correctNotify.textContent = "You got the answer right!";
+            quiz.appendChild(correctNotify);
+            console.log("correct")
+
     next();
 }
 
-//loops through the questions 
+// Loops through the questions 
 function next() {
     currentQuestion++;
 
@@ -159,13 +171,15 @@ function next() {
         return;
     }
 
-    var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
+    var quizContent = "<h2>" + questions[currentQuestion].question + "</h2>"
 
     for (var buttonLoop = 0; buttonLoop < questions[currentQuestion].choices.length; buttonLoop++) {
         var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
         buttonCode = buttonCode.replace("[CHOICE]", questions[currentQuestion].choices[buttonLoop]);
         if (questions[currentQuestion].choices[buttonLoop] == questions[currentQuestion].answer) {
             buttonCode = buttonCode.replace("[ANS]", "correct()");
+            // Tell console if question was answer incorrectly
+            console.log
         } else {
             buttonCode = buttonCode.replace("[ANS]", "incorrect()");
         }
