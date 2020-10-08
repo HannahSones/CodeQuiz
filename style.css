@@ -12,7 +12,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
-    opacity: 0.3;
+    opacity: 0.6;
 } */
 
 /* Header bar */
@@ -25,7 +25,7 @@ body {
 
 .rightAlign {
     display: flex;
-    align-items: flex-end;
+    text-align: right;
 }
 
 .topBar {
@@ -36,6 +36,10 @@ body {
     padding: 5px 10px 5px 10px;
     margin: auto;
     color: white;
+}
+
+.flexRow {
+    display: flex;
 }
 
 /* Button styling */
@@ -59,13 +63,7 @@ button:hover {
     box-shadow: 10px 10px 10px lightgrey;
 }
 
-#name {
-    margin: 0px 0px 10px 0px;
-    border-color: #064b68;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 14px;
-    padding: 3px 2px 3px 2px;
-}
+/* Quiz content styling */
 
 #quizBody {
     text-align: center;
@@ -99,6 +97,13 @@ a {
     color: white;
 }
 
+#name {
+    margin: 0px 0px 10px 0px;
+    border-color: #064b68;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    padding: 3px 2px 3px 2px;
+}
 
 footer {
     background-color: #064b68;

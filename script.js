@@ -56,33 +56,35 @@ var currentQuestion = -1;
 var timeLeft = 0;
 var timer;
 
+var notificationBox = document.getElementById("notification");
+
 // Starts the countdown timer once user clicks 'play'
 function play() {
 
     timeLeft = 90;
     document.getElementById("timeLeft").innerHTML = timeLeft;
 
-    timer = setInterval(function() {
+    timer = setInterval(function () {
         timeLeft--;
         document.getElementById("timeLeft").innerHTML = timeLeft;
-        
+
         // When timer is below 0, end the game
         if (timeLeft <= 0) {
             clearInterval(timer);
-            endGame(); 
+            endGame();
         }
     }, 1000);
 
     next();
 }
 
-// Stops the timer to end the game 
+// Stops the timer to end the game
 function endGame() {
     clearInterval(timer);
 
     var quizContent = `
     <h1>Game over!</h1>
-    <h2>You got ` + score +  ` /80!</h2>
+    <h2>You got ` + score + ` /80!</h2>
     <input type="text" id="name" placeholder="Initials"> 
     <button onclick="saveScore()">Save score!</button>`;
 
@@ -92,7 +94,7 @@ function endGame() {
 // Stores the scores on local storage
 function saveScore() {
     localStorage.setItem("highscore", score);
-    localStorage.setItem("highscoreName",  document.getElementById('name').value);
+    localStorage.setItem("highscoreName", document.getElementById('name').value);
     getScore();
 }
 
@@ -113,7 +115,7 @@ function getScore() {
 // Clears the saved scores in the local storage
 function clearScore() {
     localStorage.setItem("highscore", "");
-    localStorage.setItem("highscoreName",  "");
+    localStorage.setItem("highscoreName", "");
 
     resetGame();
 }
@@ -139,12 +141,18 @@ function resetGame() {
 // If a player answers incorrectly, deduct 10 seconds from the timer and add alert
 function incorrect() {
     timeLeft -= 10;
-    
-        var incorrectNotify = document.createElement("div");
-        incorrectNotify.setAttribute("style", "font-size: 12px; color: red; font-weight: bold;");
-        incorrectNotify.textContent = "You got the answer wrong!";
-        quiz.appendChild(incorrectNotify);
-        console.log("incorrect")
+
+    var incorrectNotify = document.createElement("div");
+    incorrectNotify.setAttribute("style", "font-size: 12px; color: red; font-weight: bold;");
+    incorrectNotify.textContent = "You got the answer wrong!";
+    notificationBox.innerHTML = "";
+    notificationBox.appendChild(incorrectNotify);
+    console.log("incorrect")
+
+    setTimeout(function() {
+        notificationBox.innerHTML = ""
+    }, 1500);
+
 
     next();
 }
@@ -154,10 +162,15 @@ function correct() {
     score += 10;
 
     var correctNotify = document.createElement("div");
-            correctNotify.setAttribute("style", "font-size: 12px; color: green; font-weight: bold;");
-            correctNotify.textContent = "You got the answer right!";
-            quiz.appendChild(correctNotify);
-            console.log("correct")
+    correctNotify.setAttribute("style", "font-size: 12px; color: green; font-weight: bold;");
+    correctNotify.textContent = "You got the answer right!";
+    notificationBox.innerHTML = "";
+    notificationBox.appendChild(correctNotify);
+    console.log("correct")
+
+    setTimeout(function() {
+        notificationBox.innerHTML = ""
+    }, 1500);
 
     next();
 }
@@ -174,7 +187,7 @@ function next() {
     var quizContent = "<h2>" + questions[currentQuestion].question + "</h2>"
 
     for (var buttonLoop = 0; buttonLoop < questions[currentQuestion].choices.length; buttonLoop++) {
-        var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
+        var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>";
         buttonCode = buttonCode.replace("[CHOICE]", questions[currentQuestion].choices[buttonLoop]);
         if (questions[currentQuestion].choices[buttonLoop] == questions[currentQuestion].answer) {
             buttonCode = buttonCode.replace("[ANS]", "correct()");
