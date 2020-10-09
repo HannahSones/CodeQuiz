@@ -50,13 +50,12 @@ var questions = [{
 ];
 
 
-// Setting the numerical variables for the timer and score
+// Setting the variables for the timer and score
 var score = 0;
+var initials = document.getElementById("name");
 var currentQuestion = -1;
 var timeLeft = 0;
 var timer;
-
-var notificationBox = document.getElementById("notification");
 
 // Starts the countdown timer once user clicks 'play'
 function play() {
@@ -86,35 +85,63 @@ function endGame() {
     <h1>Game over!</h1>
     <h2>You got ` + score + ` /80!</h2>
     <input type="text" id="name" placeholder="Initials"> 
-    <button onclick="saveScore()">Save score!</button>`;
+    <button onclick="saveScore()">Save score!</button><button onclick="resetGame()">Play Again!</button><button onclick="viewHighscores()">View leaderboard!</button>`;
 
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
 // Stores the scores on local storage
-function saveScore() {
-    localStorage.setItem("highscore", score);
-    localStorage.setItem("highscoreName", document.getElementById('name').value);
-    getScore();
-}
 
-function getScore() {
-    var quizContent = `
-    <h2>` + localStorage.getItem("highscoreName") + `'s highscore is:</h2>
-    <h1>` + localStorage.getItem("highscore") + `</h1><br> 
+var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+
+function saveScore() {
+
+    var allScores = {
+        total: score,
+        name: document.getElementById('name').value
+    };
+    highscores.push(allScores);
+
+    highscores.sort(function(a, b){return b-a});
+    console.log(highscores);
     
-    <button onclick="clearScore()">Clear score!</button><button onclick="resetGame()">Play Again!</button>
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+
+};
+    
+//     // getScore();
+
+// function getScore() {
+//     var quizContent = `
+//     <h2>` + localStorage.setItem("highscoreName") + `'s highscore is:</h2>
+//     <h1>` + localStorage.setItem("highscores") + `</h1><br> 
+    
+//     <button onclick="clearScore()">Clear score!</button><button onclick="resetGame()">Play Again!</button><button onclick-"viewHighscores()">View leaderboard!</button>
+//     `;
+
+//     console.log("Score is:", score);
+//     console.log("Initials:", document.getElementById('name').value);
+
+//     document.getElementById("quizBody").innerHTML = quizContent;
+
+// }
+
+
+function viewHighscores() {
+
+    var leaderBoard = `
+    <h1>Leaderboard</h1>
+    <h2>` + localStorage.getItem("highscores") + `</h2> 
+    
+    <button onclick="resetGame()">Play Again!</button>
     `;
 
-    console.log("Initials:", document.getElementById('name').value);
-    console.log("Score is:", score);
-
-    document.getElementById("quizBody").innerHTML = quizContent;
+    document.getElementById("quizBody").innerHTML = leaderBoard;
 }
 
 // Clears the saved scores in the local storage
 function clearScore() {
-    localStorage.setItem("highscore", "");
+    localStorage.setItem("highscores", "");
     localStorage.setItem("highscoreName", "");
 
     resetGame();
@@ -139,6 +166,9 @@ function resetGame() {
 }
 
 // If a player answers incorrectly, deduct 10 seconds from the timer and add alert
+
+var notificationBox = document.getElementById("notification");
+
 function incorrect() {
     timeLeft -= 10;
 
@@ -149,7 +179,7 @@ function incorrect() {
     notificationBox.appendChild(incorrectNotify);
     console.log("incorrect")
 
-    setTimeout(function() {
+    setTimeout(function () {
         notificationBox.innerHTML = ""
     }, 1500);
 
@@ -168,7 +198,7 @@ function correct() {
     notificationBox.appendChild(correctNotify);
     console.log("correct")
 
-    setTimeout(function() {
+    setTimeout(function () {
         notificationBox.innerHTML = ""
     }, 1500);
 
@@ -191,8 +221,6 @@ function next() {
         buttonCode = buttonCode.replace("[CHOICE]", questions[currentQuestion].choices[buttonLoop]);
         if (questions[currentQuestion].choices[buttonLoop] == questions[currentQuestion].answer) {
             buttonCode = buttonCode.replace("[ANS]", "correct()");
-            // Tell console if question was answer incorrectly
-            console.log
         } else {
             buttonCode = buttonCode.replace("[ANS]", "incorrect()");
         }
