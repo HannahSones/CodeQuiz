@@ -16,19 +16,19 @@ At the end of quiz, a user can input their initials to save their highscore to l
 The following screenshots illustrate the different interfaces encountered when playing the quiz.
 
 Coding quiz start screen
-![alt text](#)
+![alt text](https://github.com/HannahSones/CodeQuiz/blob/main/Screengrabs/CodeQuizHomepage.PNG)
 
 Question answered correctly
-![alt text](#)
+![alt text](https://github.com/HannahSones/CodeQuiz/blob/main/Screengrabs/AnswerRight.PNG)
 
 Question answered incorrectly
-![alt text](#)
+![alt text](https://github.com/HannahSones/CodeQuiz/blob/main/Screengrabs/AnswerWrong.PNG)
 
 Game over screen
-![alt text](#)
+![alt text](https://github.com/HannahSones/CodeQuiz/blob/main/Screengrabs/GameOver.PNG)
 
 View highscores leaderboard
-![alt text](#)
+![alt text](https://github.com/HannahSones/CodeQuiz/blob/main/Screengrabs/HighscoresLeaderboard.PNG)
 
 -------------
 ## Link to deployed application
