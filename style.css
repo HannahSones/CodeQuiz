@@ -97,6 +97,21 @@ a {
     padding: 3px 2px 3px 2px;
 }
 
+ol {
+    background-color: #064b68;
+    color: #fffbf6;
+    padding: 5px;
+}
+
+li {
+    background-color: #064b68;
+    color: #fffbf6;
+    padding: 5px;
+    border-style: solid;
+    border-color: #fffbf6;
+}
+
+
 footer {
     background-color: #064b68;
     display:inline-block;
