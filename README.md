@@ -32,7 +32,7 @@ View highscores leaderboard
 
 -------------
 ## Link to deployed application
-
+https://hannahsones.github.io/CodeQuiz/
 
 ------------
 © Hannah Sones. All rights reserved.
