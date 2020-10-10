@@ -128,13 +128,12 @@ function viewHighscores() {
 
     var playAgainBtn = document.createElement("button");
     playAgainBtn.textContent = "Play again!";
-    playAgainBtn.onclick="resetGame()";
+    playAgainBtn.onclick = resetGame;
     
     quizBody.innerHTML = "";
     quizBody.append(leaderBoard);
     quizBody.append(orderedList);
     quizBody.append(playAgainBtn);
-
     
 }
 
