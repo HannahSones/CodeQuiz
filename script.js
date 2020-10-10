@@ -103,7 +103,7 @@ function saveScore() {
     highscores.push(allScores);
     console.log(highscores);
 
-    highscores.sort(function (a, b) { return a.score - b.score; });
+    highscores.sort(function (a, b) { return b.score - a.score; });
 
     localStorage.setItem("highscores", JSON.stringify(highscores));
 
@@ -180,7 +180,7 @@ function incorrect() {
 
     setTimeout(function () {
         notificationBox.innerHTML = ""
-    }, 1500);
+    }, 2000);
 
 
     next();
@@ -199,7 +199,7 @@ function correct() {
 
     setTimeout(function () {
         notificationBox.innerHTML = ""
-    }, 1500);
+    }, 2000);
 
     next();
 }
