@@ -121,20 +121,20 @@ function viewHighscores() {
 
     for (var i = 0; i < retrieveScores.length; i++) {
 
-            var createLi = document.createElement("li");
-            createLi.textContent = retrieveScores[i].name + ", " + retrieveScores[i].score;
-            orderedList.append(createLi);
+        var createLi = document.createElement("li");
+        createLi.textContent = retrieveScores[i].name + ", " + retrieveScores[i].score;
+        orderedList.append(createLi);
     };
 
     var playAgainBtn = document.createElement("button");
     playAgainBtn.textContent = "Play again!";
     playAgainBtn.onclick = resetGame;
-    
+
     quizBody.innerHTML = "";
     quizBody.append(leaderBoard);
     quizBody.append(orderedList);
     quizBody.append(playAgainBtn);
-    
+
 }
 
 
