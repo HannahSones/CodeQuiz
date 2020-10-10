@@ -97,47 +97,47 @@ var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 function saveScore() {
 
     var allScores = {
-        total: score,
+        score: score,
         name: document.getElementById('name').value
     };
     highscores.push(allScores);
-
-    highscores.sort(function(a, b){return b-a});
     console.log(highscores);
-    
+
+    highscores.sort(function (a, b) { return a.score - b.score; });
+
     localStorage.setItem("highscores", JSON.stringify(highscores));
 
 };
-    
-//     // getScore();
-
-// function getScore() {
-//     var quizContent = `
-//     <h2>` + localStorage.setItem("highscoreName") + `'s highscore is:</h2>
-//     <h1>` + localStorage.setItem("highscores") + `</h1><br> 
-    
-//     <button onclick="clearScore()">Clear score!</button><button onclick="resetGame()">Play Again!</button><button onclick-"viewHighscores()">View leaderboard!</button>
-//     `;
-
-//     console.log("Score is:", score);
-//     console.log("Initials:", document.getElementById('name').value);
-
-//     document.getElementById("quizBody").innerHTML = quizContent;
-
-// }
 
 
 function viewHighscores() {
+    var retrieveScores = JSON.parse(localStorage.getItem('highscores'));
+    console.log(retrieveScores);
 
-    var leaderBoard = `
-    <h1>Leaderboard</h1>
-    <h2>` + localStorage.getItem("highscores") + `</h2> 
+    var leaderBoard = document.createElement("h1");
+    leaderBoard.textContent = "Leaderboard!"
+
+    var orderedList = document.createElement("ol");
+
+    for (var i = 0; i < retrieveScores.length; i++) {
+
+            var createLi = document.createElement("li");
+            createLi.textContent = retrieveScores[i].name + ", " + retrieveScores[i].score;
+            orderedList.append(createLi);
+    };
+
+    var playAgainBtn = document.createElement("button");
+    playAgainBtn.textContent = "Play again!";
+    playAgainBtn.onclick="resetGame()";
     
-    <button onclick="resetGame()">Play Again!</button>
-    `;
+    quizBody.innerHTML = "";
+    quizBody.append(leaderBoard);
+    quizBody.append(orderedList);
+    quizBody.append(playAgainBtn);
 
-    document.getElementById("quizBody").innerHTML = leaderBoard;
+    
 }
+
 
 // Clears the saved scores in the local storage
 function clearScore() {
