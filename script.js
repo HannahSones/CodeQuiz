@@ -7,7 +7,7 @@ var questions = [{
 },
 
 {
-    question: "Question 2: How many elements can you apply an 'ID' attribute to?",
+    question: "Question 2: How many attributes of ID should you apply to an element?",
     choices: ["3", "As many as you want", "1", "0"],
     answer: "1"
 },
@@ -101,7 +101,6 @@ function saveScore() {
         name: document.getElementById('name').value
     };
     highscores.push(allScores);
-    console.log(highscores);
 
     highscores.sort(function (a, b) { return b.score - a.score; });
 
@@ -112,7 +111,6 @@ function saveScore() {
 
 function viewHighscores() {
     var retrieveScores = JSON.parse(localStorage.getItem('highscores'));
-    console.log(retrieveScores);
 
     var leaderBoard = document.createElement("h1");
     leaderBoard.textContent = "Leaderboard!"
@@ -176,11 +174,10 @@ function incorrect() {
     incorrectNotify.textContent = "You got the answer wrong!";
     notificationBox.innerHTML = "";
     notificationBox.appendChild(incorrectNotify);
-    console.log("incorrect")
 
     setTimeout(function () {
         notificationBox.innerHTML = ""
-    }, 2000);
+    }, 3000);
 
 
     next();
@@ -195,11 +192,10 @@ function correct() {
     correctNotify.textContent = "You got the answer right!";
     notificationBox.innerHTML = "";
     notificationBox.appendChild(correctNotify);
-    console.log("correct")
 
     setTimeout(function () {
         notificationBox.innerHTML = ""
-    }, 2000);
+    }, 3000);
 
     next();
 }
